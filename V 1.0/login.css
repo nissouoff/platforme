@@ -1,0 +1,154 @@
+body {
+    margin: 0px;
+    background: #eadfdf;
+    user-select: none;
+    font-family: 'Poppins', sans-serif;
+    height: max-content;
+}
+
+.bar {
+    position: fixed;
+    background: #fa91c9db;
+    z-index: 1000; /* S'assure que le header reste au-dessus du contenu */
+    width: 5px;
+    left: 31%;
+    top: 0%;
+
+}
+
+.bar1 {
+    position: fixed;
+    background: #fa91c9db;
+    z-index: 1000; /* S'assure que le header reste au-dessus du contenu */
+    width: 5px;
+    left: 71%;
+    top: 0%;
+
+}
+
+/* Personnalisation de la barre de défilement */
+::-webkit-scrollbar {
+    width: 12px; /* Largeur de la barre de défilement */
+}
+
+::-webkit-scrollbar-track {
+    background: #efa8a8ae; /* Couleur de la piste (l’arrière-plan de la scrollbar) */
+    border-radius: 10px; /* Coins arrondis pour la piste */
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #f78b8b, #f86969); /* Dégradé sur le pouce de la scrollbar */
+    border-radius: 10px; /* Coins arrondis pour le pouce */
+    border: 3px solid #f97272; /* Bordure qui donne un effet d’espace autour du pouce */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #fd2c2c, #ec1111); /* Changement de couleur au survol */
+}
+
+.header {
+    position: fixed; /* Fixe le header en haut de la page */
+    top: 0; /* Positionne le header tout en haut */
+    left: 0;
+    width: 100%; /* S'étend sur toute la largeur de la page */
+    padding: 10px; /* Un peu plus de padding pour l'espacement interne */
+    margin-top: 8px; /* Supprime la marge supérieure pour éviter un décalage avec 'fixed' */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* S'assure que le header reste au-dessus du contenu */
+}
+
+.header-a {
+    background-color: #fa91c9db;
+    padding: 15px;
+    border-radius: 13px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4), -5px -5px 10px rgba(255, 255, 255, 0.1);
+}
+
+.header-a:hover {
+    box-shadow: 8px 8px 14px rgba(60, 59, 59, 0.5), -5px -5px 10px rgba(218, 172, 172, 0.3);
+}
+#h-service, #h-tarif, #h-apropo, #h-connxion {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 2px;
+    margin-right: 23px;
+    font-size: 14px;
+}
+
+#h-tarif {
+    margin-right: 37px;
+}
+
+#h-service:hover, #h-tarif:hover, #h-apropo:hover, #h-connxion:hover {
+    color: #fff;
+    background-color: #db7b7b;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.contenu {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Si tu veux que les éléments s'empilent verticalement */
+    color: #000000;
+    margin: 10px;
+    top: 70px;
+    background-color: #fa91c9db;
+    border-radius: 11px;
+    padding: 0.05px;
+}
+
+.contenu-a {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si l'espace manque */
+    margin: 10px;
+    border-radius: 10px;
+    gap: 22px;
+    justify-content: center; /* Aligner les éléments à gauche */
+}
+
+.contenu-a div {
+    background: #edc1e4;
+    width: 370px;
+    height: 55px;
+    border-radius: 11px;
+    padding: 10px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    transition: all 0.4s ease-in-out; /* Transition fluide pour toutes les propriétés */
+    font-family: "Ubuntu", sans-serif;
+}
+
+.contenu-a div:hover, .contenu-a div:active, .contenu-a div:focus {
+    display: flex;
+    flex-direction: column; /* Agrandissement en largeur */
+    height: 300px; /* Hauteur spécifiée pour permettre l'animation */
+    border-radius: 20px; /* Coins plus arrondis */
+    background: #f1b3e5; /* Changement de couleur */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre fluide */
+}
+
+
+
+.contenu-a h3 {
+    font-size: 15px;
+    background-color: #efb2e3;
+    margin-left: 5px;
+    width: max-content;
+    padding: 10px;
+    border-radius: 13px;
+    position: relative;
+    display: flex;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.contenu-a p {
+    margin-left: 7px;
+    font-size: 15px;
+}
