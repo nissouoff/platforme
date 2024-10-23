@@ -12,7 +12,7 @@ body {
 
 .hero {
     height: 100vh;
-    background: url('img/3.svg') center/cover no-repeat;
+    background: url('/V 1.0/img/3.svg') center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,23 +23,23 @@ body {
 
 @keyframes Bganim {
     0% {
-        background: url('img/3.svg') center/cover no-repeat;
+        background: url('/V 1.0/img/3.svg') center/cover no-repeat;
     }
 
     30% {
-        background: url('img/4.svg') center/cover no-repeat;
+        background: url('/V 1.0/img/4.svg') center/cover no-repeat;
     }
 
     60% {
-        background: url('img/1.svg') center/cover no-repeat;
+        background: url('/V 1.0/img/1.svg') center/cover no-repeat;
     }
 
     90% {
-        background: url('img/2.svg') center/cover no-repeat;
+        background: url('/V 1.0/img/2.svg') center/cover no-repeat;
     }
 
     100% {
-        background: url('img/2.svg') center/cover no-repeat;
+        background: url('/V 1.0/img/2.svg') center/cover no-repeat;
     }
 
     
