@@ -6,103 +6,102 @@ body {
     height: max-content;
 }
 
-/* Personnalisation de la barre de défilement */
+.hero {
+    height: 100vh;
+    background: url('img/2.svg') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3em;
+}
+
+.hero p {
+    font-size: 1.2em;
+    margin: 20px 0;
+}
+
+.hero a {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #658ff1;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
 ::-webkit-scrollbar {
     width: 12px; /* Largeur de la barre de défilement */
+    display: none;
 }
 
 ::-webkit-scrollbar-track {
     background: #cfcffc; /* Couleur de la piste (l’arrière-plan de la scrollbar) */
     border-radius: 3px; /* Coins arrondis pour la piste */
+    display: none;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #4f4f5da1; /* Dégradé sur le pouce de la scrollbar */
     border-radius: 3px; /* Coins arrondis pour le pouce */
     border: 1px solid #4f4f5da1; /* Bordure qui donne un effet d’espace autour du pouce */
+    display: none;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #9898b690; /* Changement de couleur au survol */
+    display: none;
 }
 
-.header {
-    position: relative; /* Fixe le header en haut de la page */
-    padding: 10px; /* Un peu plus de padding pour l'espacement interne */
-    margin-top: 8px; /* Supprime la marge supérieure pour éviter un décalage avec 'fixed' */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
 
-.header-a {
-    background-color: #0000da;
-    padding: 15px;
-    border-radius: 13px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4), -5px -5px 10px rgba(255, 255, 255, 0.1);
-}
-
-.header-a:hover {
-    box-shadow: 8px 8px 14px rgba(60, 59, 59, 0.5), -5px -5px 10px rgba(218, 172, 172, 0.3);
-}
-#h-service, #h-tarif, #h-apropo, #h-connxion {
-    color: #fff;
-    text-decoration: none;
-    margin-left: 2px;
-    margin-right: 23px;
-    font-size: 14px;
-}
-
-#h-tarif {
-    margin-right: 37px;
-}
-
-#h-service:hover, #h-tarif:hover, #h-apropo:hover, #h-connxion:hover {
-    color: #fff;
-    background-color: #9f9fff;
-    padding: 10px;
-    border-radius: 10px;
-}
 
 .cont {
     display: flex;
     flex-direction: column;
     position: relative;
 }
+
 .contenu {
-    width: min-content;
-    position: relative;
     display: flex;
     flex-direction: column; /* Si tu veux que les éléments s'empilent verticalement */
     color: #000000;
     margin: 10px;
-    left: 50%;
-    transform: translate(-50%);
     background-color: #9f9fff;
     border-radius: 11px;
     padding: 0.05px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    transition: all 0.6s ease-in-out; /* Transition fluide pour toutes les propriétés */
+    font-family: "Ubuntu", sans-serif;
     align-items: center;
-    justify-content: center;
+    & h4 {
+        text-align: center;
+    }
     
 }
 
+
 .contenu-a {
-    width: 800px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     margin: 10px;
     border-radius: 10px;
     gap: 17px;
+    
     justify-items: center; /* Aligner les éléments à gauche */
     
 }
 
-
-
 .contenu-a img {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     position: relative;
     left: 50%;
     transform: translate(-50%);
@@ -111,8 +110,8 @@ body {
 
 .contenu-a div {
     background: #6565ff;
-    width: 70px;
-    height: 60px;
+    width: 300px;
+    height: 250px;
     border-radius: 11px;
     overflow: hidden;
     padding: 10px;
@@ -124,21 +123,10 @@ body {
     font-family: "Ubuntu", sans-serif;
 }
 
-.contenu-a div h3:not(hover) {
-    opacity: 0;
-    transition: opacity 0.4s ease-in-out;
-}
-
-.contenu-a div:hover h3 {
-    opacity: 1; /* Afficher le texte au hover */
-}
 
 .contenu-a div:hover, .contenu-a div:active, .contenu-a div:focus {
-    display: flex;
-    
+    display: flex; 
     flex-direction: column; /* Agrandissement en largeur */
-    width: 400px;
-    height: 300px; /* Hauteur spécifiée pour permettre l'animation */
     border-radius: 20px; /* Coins plus arrondis */
     background: #5555fb; /* Changement de couleur */
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4); /* Ajout d'une ombre fluide */
@@ -155,7 +143,7 @@ body {
 
 .contenu-a h3 {
     transition: all 0.5s ease-in-out;
-    font-size: 15px;
+    font-size: 13px;
     background-color: #2424fb;
     color: #fff;
     margin-left: 5px;
@@ -170,7 +158,7 @@ body {
 
 .contenu-a p {
     margin-left: 7px;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .contenu2 {
@@ -339,6 +327,7 @@ body {
     margin: 5px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 200px;
     text-align: center;
     background: #bfbff8;
@@ -385,10 +374,99 @@ body {
     text-decoration: none;
 }
 
+/* From Uiverse.io by david-mohseni */ 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+   
+  }
+
+  .wrapper ul {
+    padding: 0px;
+   
+  }
+  
+  .wrapper .icon {
+    position: relative;
+    background: #fff;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .wrapper .tooltip {
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    background: #fff;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .wrapper .tooltip::before {
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    background: #fff;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .wrapper .icon:hover .tooltip {
+    top: -45px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  .wrapper .icon:hover span,
+  .wrapper .icon:hover .tooltip {
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+  }
+  
+  .wrapper .facebook:hover,
+  .wrapper .facebook:hover .tooltip,
+  .wrapper .facebook:hover .tooltip::before {
+    background: #1877f2;
+    color: #fff;
+  }
+  
+  .wrapper .twitter:hover,
+  .wrapper .twitter:hover .tooltip,
+  .wrapper .twitter:hover .tooltip::before {
+    background: #1da1f2;
+    color: #fff;
+  }
+  
+  .wrapper .instagram:hover,
+  .wrapper .instagram:hover .tooltip,
+  .wrapper .instagram:hover .tooltip::before {
+    background: #e4405f;
+    color: #fff;
+  }
+  
    @keyframes test {
     0% {
-       width: 50px;
-       height: 50px;
+       width: 35px;
+       height: 35px;
     }
 
 
