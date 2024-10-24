@@ -257,3 +257,41 @@ body {
 .cont:hover .cont-c button, .cont:focus .cont-c button {
   background: #0505fb;
 }
+
+@media (max-width: 768px) {
+  .cont {
+    width: 350px;
+    height: 600px;
+  }
+
+  #singup {
+    font-size: 13px;
+  }
+
+  .cont-b img {
+    width: 160px;
+    transition: all ease-in 0.2s;
+  }
+
+  .cont-bb h4 {
+    font-size: 12px;
+  }
+
+  .cont-bb span {
+    font-size: 12px;
+  }
+
+  .cont-c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    margin-top: 30px;
+    height: 100vb;
+    border-radius: 10px;
+    transition: all ease-in 0.2s;
+    transform: translateY(30%);
+    position: absolute;
+    width: 100%;
+  }
+}
