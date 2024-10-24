@@ -1,10 +1,146 @@
 body {
 	background: #dadaff;
   overflow: hidden;
+  position: relative;
+  font-family: "Ubuntu", serif;
+  user-select: none;
 }
 
 .cont {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 500px;
+  height: 600px;
+  background: #a2a2f5;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 11px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4); 
+  overflow: hidden;
+  opacity: 1;
+  transition: all ease-in 0.2s;
+  
+} 
+
+.cont:hover {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+ 
+
 }
+
+.cont:hover .cont-c {
+  border-radius: 18px;
+}
+
+.cont:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow( 1px 1px 8px rgba(0, 0, 0, 0.538));
+}
+
+.cont-a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+#singup {
+  text-decoration: none;
+  color: #fff;
+  background: #0505fb;
+  padding: 8px;
+  border-radius: 11Px;
+  font-size: 15px;
+}
+
+.cont-b {
+  display: flex;
+  flex-direction: row;
+}
+
+.cont-bb {
+  width: 50%;
+  margin-left: 10px;
+
+  & h4 {
+    text-align: center;
+    font-size: 15px;
+  }
+
+  & span {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+.cont-bbb {
+  align-items: center;
+  position: relative;
+  
+}
+
+.cont-b img {
+  width: 250px;
+  transition: all ease-in 0.2s;
+}
+
+.cont-c {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  margin-top: 30px;
+  height: 100vb;
+  border-radius: 10px;
+  transition: all ease-in 0.2s;
+
+  &
+   input {
+    width: 250px;
+    height: 40px;
+    border: 1px solid #a2a2f5;
+    outline: #a2a2f5;
+    border-radius: 12px;
+    background: #3737f920;
+    margin-bottom: 10px;
+    padding: 11px;
+  }
+
+   #recup {
+    margin: 0px;
+    padding: 10px;
+    font-size: 11px;
+    width: 250px;
+    text-align: right;
+    padding: 4px;
+    cursor: pointer;
+    color: #a2a2f5;
+  }
+
+   button {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 11px;
+    background: #a9a9fb;
+    color: #fff;
+    margin-top: 10px;
+    transition: ease-in 0.1s;
+  }
+
+  button:hover {
+    background: #0505fb;
+  }
+
+  #copy {
+    font-size: 11px;
+    position: relative;
+    top: 70px;
+  }
+
+}
+
