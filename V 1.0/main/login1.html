@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connxion et inscription</title>
+    <link rel="stylesheet" href="/V 1.0/css/login1.css">
+</head>
+<body>
+
+    <div class="cont">
+        <div class="cont-a">
+            <h3 id="h">Bienvenu sur notre platforme </h3>
+            <span>Cree votre boutique en ligne juste en quelque minute</span>
+         
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/devtools-detect@latest/dist/devtools-detect.min.js"></script>
+    <script>
+
+
+        function detectDevTools() {
+            const threshold = 160;
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            
+            if (widthThreshold || heightThreshold || window.devtools.isOpen) {
+                console.log("Les DevTools sont ouvertes !");
+                window.location.href = "https://www.google.com";
+            }
+
+        }
+
+        setInterval(detectDevTools, 1000);
+
+        window.addEventListener('devtoolschange', event => {
+            if(event.detail.isOpen) {
+                window.location.href = "https://www.google.com";
+            }
+        });
+    </script>
+
+
+    <script src="/V 1.0/js/login1.js"></script>
+    
+</body>
+</html>
