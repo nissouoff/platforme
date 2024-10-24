@@ -108,7 +108,7 @@ document.getElementById("btn").addEventListener("click", function(event) {
         // DEUXIÈME CLIC: Rediriger vers une nouvelle page
 
         // Ouvrir une nouvelle page (login1.html) dans un nouvel onglet
-        window.open('/V 1.0/main/login1.html');
+        window.open('/V 1.0/main/login1.html', '_self');
     }
 });
 
