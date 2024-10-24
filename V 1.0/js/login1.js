@@ -69,7 +69,7 @@ document.getElementById("singup").addEventListener("click", function(event) {
         // Add the reverse logic here if needed
         clickCount = 0;
         
-        document.getElementById("singup").textContent = "Vous avez un compte";
+        document.getElementById("singup").textContent = "Cree un compte";
         const contC = document.querySelector('.cont-c');
         const contD = document.querySelector('.cont-d');
         
