@@ -29,7 +29,7 @@ function detectDevTools() {
             window.location.href = "https://www.google.com";
         }
     }
-}
+} 
 
 if (!isMobileDevice()) {
     setInterval(detectDevTools, 1000);
@@ -39,6 +39,52 @@ if (!isMobileDevice()) {
             window.location.href = "https://www.google.com";
         }
     });
-}
+} 
 
 */
+let clickCount = 0;
+
+document.getElementById("singup").addEventListener("click", function(event) {
+    event.preventDefault(); 
+    
+    clickCount++;
+
+    if (clickCount === 1){
+        document.getElementById("singup").textContent = "Vous avez un compte";
+        const contC = document.querySelector('.cont-c');
+        const contD = document.querySelector('.cont-d');
+        
+        contC.classList.add('active');
+        
+        setTimeout(function() {
+            contC.style.display = 'none';
+        }, 300);
+        
+        contD.style.display = 'flex';
+        setTimeout(function() {
+            contD.classList.add('active2');
+        }, 10);
+
+    } else if (clickCount === 2) {
+        // Add the reverse logic here if needed
+        clickCount = 0;
+        
+        document.getElementById("singup").textContent = "Vous avez un compte";
+        const contC = document.querySelector('.cont-c');
+        const contD = document.querySelector('.cont-d');
+        
+        contD.classList.remove('active2');
+        
+        setTimeout(function() {
+            contD.style.display = 'none';
+            contC.style.display = 'flex';
+        }, 300);
+        
+        setTimeout(function() {
+            contC.classList.remove('active');
+        }, 10);
+    }
+});
+
+
+   
