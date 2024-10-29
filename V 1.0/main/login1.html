@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <div class="cont">
+    <div class="cont" id="cont">
             <div class="cont-a">
             <p>Platforme-Dz</p>
             <a id="singup" href="">Cree un compte</a>
@@ -27,31 +27,38 @@
             </div>
         </div>
 
-        <div id="cont-c" class="cont-c">
+        <div id="cont-c" class="cont-c" style="display: none;">
             <h3>Information de Connxion</h3>
-            <input type="email" placeholder="Votre adresse email">
-            <input type="password" placeholder="Mot de passe">
+            <input id="put-email" type="email" placeholder="Votre adresse email">
+            <input id="put-password" type="password" placeholder="Mot de passe">
             <p id="recup">Recupere votre compte</p>
-            <button>Connxion</button>
+            <button id="cnx">Connxion</button>
+            <p id="copy">&copy; All right reserved 2024</p>
+            <p id="erreur">erreur</p>
+        </div>
+
+        <div class="cont-d" style="display: none;"> 
+            <h3>Information d'inscription perssonelle</h3>
+            <input id="cree-nom" type="text" placeholder="Votre nom complet" required>
+            <input id="cree-email" type="email" placeholder="Votre adresse email" required>
+            <input id="cree-password" type="password" placeholder="Mot de passe" required>
+            <input id="cree-rpassword" type="password" placeholder="Entre a nouvaux votre mot de passe" required>
+            <button id="inc">Inscription</button>
             <p id="copy">&copy; All right reserved 2024</p>
         </div>
 
-        <div class="cont-d" style="display: none;" >
-            <h3>Information d'inscription perssonelle</h3>
-            <input type="text" placeholder="Votre nom complet" required>
-            <input type="email" placeholder="Votre adresse email" required>
-            <input type="password" placeholder="Mot de passe" required>
-            <input type="password" placeholder="Entre a nouvaux votre mot de passe" required>
-            <button>Inscription</button>
+        <div class="cont-e"> 
+            <h3>Activation du compte</h3>
+            <p>Un email de verification a ete envoyer a vore email <br> veiller activer votre compte pour proceder</p>
             <p id="copy">&copy; All right reserved 2024</p>
         </div>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/devtools-detect@latest/dist/devtools-detect.min.js"></script>
-    <script>
-        
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 
     <script src="/V 1.0/js/login1.js"></script>
     

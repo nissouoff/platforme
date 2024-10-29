@@ -109,7 +109,7 @@ body {
   transform: translateY(56%);
   position: absolute;
   width: 100%;
-
+ 
   &
    input {
     width: 250px;
@@ -129,8 +129,8 @@ body {
     width: 250px;
     text-align: right;
     padding: 4px;
-    cursor: text;
     color: #a2a2f5;
+    cursor: pointer;
   }
 
    button {
@@ -143,6 +143,7 @@ body {
     margin-top: 10px;
     transition: ease-in 0.1s;
     cursor: pointer;
+
   }
 
   #copy {
@@ -247,6 +248,7 @@ body {
 .cont:focus .cont-d:not(.active) { 
   border-radius: 18px;
   transform: translateY(30%);
+  border-top: solid 1px;
 }
 
 .cont:hover .cont-c button, .cont:focus .cont-c button {
@@ -258,7 +260,7 @@ body {
   background: #0505fb;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 550px) {
   .cont {
     width: 350px;
     height: 600px;
@@ -295,3 +297,29 @@ body {
     width: 100%;
   }
 }
+
+ #cnx, #inc {
+  opacity: 0.3;
+  cursor: no-drop;
+ }
+
+ #erreur {
+  color: #fff;
+  background: #ff0000;
+  padding: 6px;
+  position: absolute;
+  top: 230px;
+  z-index: 10000;
+  border-radius: 30px;
+  width: max-content;
+  font-size: 12px;
+  text-align: center;
+  display: none;
+ }
+
+ .force {
+  border-radius: 18px !important;
+  transform: translateY(30%) !important;
+  border-top: solid 1px !important;
+}
+ 
