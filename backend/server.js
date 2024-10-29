@@ -8,7 +8,7 @@ const app = express();
 app.use(cors()); // Pour autoriser les requêtes cross-origin
 app.use(express.json());
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.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);
 
 app.post('/send-email', (req, res) => {
   const { email, subject, message } = req.body;
