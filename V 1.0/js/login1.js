@@ -193,16 +193,17 @@ document.getElementById("inc").addEventListener("click", function(event){
 
             try {
                 const response = await fetch('https://boutiquedz.onrender.com/send-email', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ email, subject, message }),
-                });
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, subject, message }),
+                  });                  
         
                 if (response.ok) {
                   alert('Email envoyé avec succès');
                 } else {
                   alert('Erreur lors de l\'envoi de l\'email');
                 }
+                
               } catch (error) {
                 console.error('Erreur:', error);
               }

@@ -23,7 +23,10 @@ app.post('/send-email', (req, res) => {
   sgMail
     .send(msg)
     .then(() => res.status(200).send('Email envoyé avec succès'))
-    .catch((error) => res.status(500).send(error.toString()));
+    .catch((error) => {
+      console.error('Erreur SendGrid:', error); // Log de l'erreur dans la console du serveur
+      res.status(500).send(error.toString()); // Réponse d'erreur envoyée au frontend
+    });
 });
 
 const PORT = process.env.PORT || 3000;
