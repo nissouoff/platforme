@@ -3,13 +3,15 @@ const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Utiliser le port défini par Render ou 3000 par défaut
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: 'https://platforme.onrender.com/', // Remplacez par l'URL de votre frontend
+    methods: ['GET', 'POST'],
+}));
 app.use(bodyParser.json());
 
 // Initialiser Firebase Admin SDK avec la clé de service et l'URL de la base de données
@@ -19,13 +21,6 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: process.env.FIREBASE_DATABASE_URL, // Utiliser une variable d'environnement pour l'URL de la base de données
 });
-
-const cors = require('cors');
-app.use(cors({
-    origin: 'https://platforme.onrender.com/', // Remplacez par l'URL de votre frontend
-    methods: ['GET', 'POST'],
-}));
-
 
 // Configurer Nodemailer
 let transporter = nodemailer.createTransport({
@@ -38,38 +33,6 @@ let transporter = nodemailer.createTransport({
 
 // Route pour l'envoi d'email
 app.post('/email-send', async (req, res) => {
-    const { uid, activ, email, name } = req.body;
-
-    try {
-        if (!uid || !activ || !email || !name) {
-            return res.status(400).json({ message: 'Données manquantes pour l\'envoi de l\'email.' });
-        }
-
-        const userSnapshot = await admin.database().ref('users/' + uid).once('value');
-        const user = userSnapshot.val();
-
-        if (!user) {
-            return res.status(404).json({ message: 'Utilisateur non trouvé.' });
-        }
-
-        const mailOptions = {
-            from: process.env.EMAIL_USER, // Utiliser la variable d'environnement
-            to: email,
-            subject: 'Activer votre compte',
-            text: `Bonjour ${name},\n\nMerci de vous être inscrit sur notre plateforme! Votre code d'activation est : ${activ}\n\nCordialement,\nL'équipe`,
-        };
-
-        await transporter.sendMail(mailOptions);
-        res.status(200).json({ message: 'E-mail envoyé avec succès.' });
-
-    } catch (error) {
-        console.error('Erreur lors de l\'envoi de l\'e-mail :', error);
-        res.status(500).json({ message: 'Erreur lors de l\'envoi de l\'e-mail.' });
-    }
-});
-
-// Route pour l'envoi d'email (secondaire)
-app.post('/email-send2', async (req, res) => {
     const { uid, activ, email, name } = req.body;
 
     try {
@@ -151,10 +114,6 @@ app.get('/user/:uid', async (req, res) => {
         const { statue, boutique, name, solde } = userData;
 
         res.status(200).json({ statue, boutique, name, solde });
-
-        console.log('statue', statue);
-        console.log('boutique', boutique);
-        console.log('solde', solde);
 
     } catch (error) {
         console.error('Erreur lors de la récupération des données :', error);
