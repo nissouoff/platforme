@@ -317,7 +317,7 @@ function showError(elementId, message) {
 async function getUserData(uid) {
     console.log("Récupération des données utilisateur pour UID :", uid);
     try {
-        const response = await fetch(`http://127.0.0.1:3000/user/${uid}`, {
+        const response = await fetch(`https://platforme.onrender.com/user/${uid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -360,7 +360,7 @@ async function handleInput() {
             hideErrors();
 
             try {
-                const response = await fetch(`http://localhost:3000/user/${userId}/statue`, {
+                const response = await fetch(`https://platforme.onrender.com/${userId}/statue`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -435,7 +435,7 @@ document.getElementById("inc").addEventListener("click", async function(event) {
     document.getElementById("overlay").style.display = "block";
 
     try {
-        const response = await fetch('http://127.0.0.1:3000/signup', {
+        const response = await fetch('https://platforme.onrender.com/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -501,7 +501,7 @@ document.getElementById("crono").addEventListener("click", async function(event)
         const name = localStorage.getItem('name');
 
         try {
-            const response = await fetch('http://127.0.0.1:3000/email-send', {
+            const response = await fetch('https://platforme.onrender.com/email-send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
