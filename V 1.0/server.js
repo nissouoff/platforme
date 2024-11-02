@@ -29,6 +29,13 @@ let transporter = nodemailer.createTransport({
     },
 });
 
+app.use(express.static(path.join(__dirname, 'V 1.0'))); // Servir le dossier contenant les fichiers statiques
+
+// Route pour la page d'accueil
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "V 1.0", "index.html")); // Charger la page d'accueil
+});
+
 // Route pour l'envoi d'email
 app.post('/email-send', async (req, res) => {
     const { uid, activ, email, name } = req.body;
