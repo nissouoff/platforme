@@ -20,6 +20,13 @@ admin.initializeApp({
     databaseURL: process.env.FIREBASE_DATABASE_URL, // Utiliser une variable d'environnement pour l'URL de la base de données
 });
 
+const cors = require('cors');
+app.use(cors({
+    origin: 'https://platforme.onrender.com/', // Remplacez par l'URL de votre frontend
+    methods: ['GET', 'POST'],
+}));
+
+
 // Configurer Nodemailer
 let transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -27,13 +34,6 @@ let transporter = nodemailer.createTransport({
         user: process.env.EMAIL_USER, // Utiliser une variable d'environnement pour l'utilisateur email
         pass: process.env.EMAIL_PASS,   // Utiliser une variable d'environnement pour le mot de passe email
     },
-});
-
-app.use(express.static(path.join(__dirname, 'V 1.0'))); // Servir le dossier contenant les fichiers statiques
-
-// Route pour la page d'accueil
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "V 1.0", "index.html")); // Charger la page d'accueil
 });
 
 // Route pour l'envoi d'email
