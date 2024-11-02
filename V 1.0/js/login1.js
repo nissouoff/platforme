@@ -196,9 +196,9 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
                 const name = userData.name || "Utilisateur"; // Récupérer le nom depuis userData
                 localStorage.setItem('name', name);
                 localStorage.setItem('email', email);
-
+                
                 try {
-                    const response = await fetch('https://platforme.onrender.com/email-send2', {
+                    const response = await fetch(' https://platforme.onrender.com/email-send2', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -317,7 +317,7 @@ function showError(elementId, message) {
 async function getUserData(uid) {
     console.log("Récupération des données utilisateur pour UID :", uid);
     try {
-        const response = await fetch(`https://platforme.onrender.com/user/${uid}`, {
+        const response = await fetch(`http://127.0.0.1:3000/user/${uid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -325,24 +325,20 @@ async function getUserData(uid) {
         });
 
         if (!response.ok) {
-            throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+            throw new Error('Erreur lors de la récupération des données de l\'utilisateur');
         }
 
         const userData = await response.json();
         console.log('Données utilisateur récupérées:', userData);
-        
-        document.getElementById("overlay").style.display = "none"; // Masquer l'overlay après une réponse réussie
         return userData;
 
     } catch (error) {
         console.error("Erreur lors de la récupération des données utilisateur :", error);
         showError('erreur', "Erreur lors de la récupération des données utilisateur.");
-        
-        document.getElementById("overlay").style.display = "none"; // Toujours masquer l'overlay en cas d'erreur
+        document.getElementById("overlay").style.display = "none";
         return null;
     }
 }
-
 
 
 async function handleInput() {
@@ -439,7 +435,7 @@ document.getElementById("inc").addEventListener("click", async function(event) {
     document.getElementById("overlay").style.display = "block";
 
     try {
-        const response = await fetch('http://127.0.0.1:3000/signup', {
+        const response = await fetch(' https://platforme.onrender.com/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -505,7 +501,7 @@ document.getElementById("crono").addEventListener("click", async function(event)
         const name = localStorage.getItem('name');
 
         try {
-            const response = await fetch('http://127.0.0.1:3000/email-send', {
+            const response = await fetch(' https://platforme.onrender.com/email-send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
