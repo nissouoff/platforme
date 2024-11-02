@@ -315,18 +315,33 @@ function showError(elementId, message) {
 
 // Fonction pour récupérer les données utilisateur depuis le serveur
 async function getUserData(uid) {
+    console.log("Récupération des données utilisateur pour UID :", uid);
     try {
-        const response = await fetch(`https://platforme.onrender.com/user/${uid}`);
+        const response = await fetch(`http://127.0.0.1:3000/user/${uid}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
         if (!response.ok) {
-            throw new Error('Erreur lors de la récupération des données de l\'utilisateur : ' + response.statusText);
+            throw new Error(`Erreur ${response.status}: ${response.statusText}`);
         }
+
         const userData = await response.json();
-        console.log(userData); // Traiter les données ici
+        console.log('Données utilisateur récupérées:', userData);
+        
+        document.getElementById("overlay").style.display = "none"; // Masquer l'overlay après une réponse réussie
+        return userData;
+
     } catch (error) {
-        console.error('Erreur lors de la récupération des données utilisateur :', error);
+        console.error("Erreur lors de la récupération des données utilisateur :", error);
+        showError('erreur', "Erreur lors de la récupération des données utilisateur.");
+        
+        document.getElementById("overlay").style.display = "none"; // Toujours masquer l'overlay en cas d'erreur
+        return null;
     }
 }
-
 
 
 
