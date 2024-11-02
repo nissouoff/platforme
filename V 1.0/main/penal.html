@@ -82,7 +82,7 @@
     
                 <div class="Solde">
                     <span>Solde</span> <br>
-                    <span>$ 0.00</span>
+                    <span id="s-sold">$ 0.00</span>
                 </div>
     
                 <div class="montant">
@@ -115,23 +115,25 @@
                     
                     <div id="kk">
                         <p id="nn">Nom de la boutique :</p>
-                        <p id="nn">Alpha-Shop</p>
+                        <p id="n-boutique"></p>
                         <img id="st-1" src="/V 1.0/img/stylo.svg" alt="">
                         <input id="put" type="text" placeholder="Nouvaux nom">
-                        <button id="cnf">Confirmer</button>
                     </div>
 
                     <div id="kk">
                         <p id="nn">Etat de votre boutique :</p>
-                        <p id="nn">Actif</p>
+                        <p id="e-boutique"></p>
                         <select name="etat" id="etat">
                             <option value="Actif">Actif</option>
                             <option value="hor-service">hor-service</option>
                         </select>
                         <img src="/V 1.0/img/stylo.svg" alt="" id="st-2">
-                        <button id="cnf">Confirmer</button>
-                        <button id="cnf">Activer</button>
+                     
                         
+                    </div>
+
+                    <div>
+                        <button id="cnf">Mettre a jour</button>
                     </div>
                 </div>
                  
@@ -277,7 +279,23 @@
                 </div>
                 
             </div>
+                 
+             </div>
+
+               <div class="part-botique">
+
+                <div class="part-boutique1">
+                    <div>
+                        <h3>Parametrage de votre boutique</h3>                  
+                    </div>
+
+
+                </div>
+                
+                
+        
             </div>
+            
             
         </div>
         </div>
@@ -287,5 +305,10 @@
     
 </body>
 <link rel="stylesheet" href="/V 1.0/css/anim-part1.css">
+<script src="https://cdn.jsdelivr.net/npm/devtools-detect@latest/dist/devtools-detect.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
 <script src="/V 1.0/js/penal.js"></script>
 </html>

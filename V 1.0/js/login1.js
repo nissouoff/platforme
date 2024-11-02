@@ -112,6 +112,8 @@ document.getElementById("cree-nom").addEventListener("input", checkSignupInputs)
 document.getElementById("cree-email").addEventListener("input", checkSignupInputs);
 document.getElementById("cree-password").addEventListener("input", checkSignupInputs);
 document.getElementById("cree-rpassword").addEventListener("input", checkSignupInputs);
+document.getElementById("code-activation").addEventListener("input", handleInput);
+document.getElementById("nom-boutique").addEventListener("input", checkNomBoutique);
 
 function checkLoginInputs() {
     const email = document.getElementById("put-email").value;
@@ -141,84 +143,391 @@ function checkSignupInputs() {
     }
 }
 
-document.getElementById("cnx").addEventListener("click", function(event) {
-    event.preventDefault(); 
+function checkNomBoutique() {
+    const nomBoutique = document.getElementById("nom-boutique").value;
+       
+    if (nomBoutique.length > 0) {
+        document.getElementById("lunch").style.opacity = "1";
+        document.getElementById("lunch").style.cursor = "pointer";
+        document.getElementById("lunch").style.background = "#8282f3";
+    } else {
+        document.getElementById("lunch").style.opacity = "0.3";
+        document.getElementById("lunch").style.cursor = "no-drop";
+    }
+}
+
+document.getElementById("cnx").addEventListener("click", async function(event) {
+    event.preventDefault();
+    hideErrors();
 
     const email = document.getElementById("put-email").value;
     const password = document.getElementById("put-password").value;
-    
-    auth.signInWithEmailAndPassword(email, password)  // Correction de la fonction
-        .then((userCredential) => {
-            const user = userCredential.user;
+   
+    document.getElementById("overlay").style.display = "block";
+    console.log("Tentative de connexion avec l'email:", email);
 
-            // Vérification si l'email est vérifié
-            if (!user.emailVerified) {
-                user.sendEmailVerification();
-                hideErrors();
-                showError('erreur', "Votre compte n'est pas activé. Veuillez l'activer depuis votre adresse e-mail.");
-                auth.signOut();  // Déconnexion si le compte n'est pas activé
+    try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        localStorage.setItem('user', JSON.stringify(user));        
+        console.log("Utilisateur connecté :", user.uid);
 
+        // Récupération des données utilisateur
+        const userData = await getUserData(user.uid);
+
+        if (userData && userData.statue === 'no confirm') {
+            document.getElementById("overlay").style.display = "none";
+            const contC = document.querySelector('.cont-c');
+            const contD = document.querySelector('.cont-d');
+            const contE = document.querySelector('.cont-e');
+            if (contC && contD && contE) {
+                contC.style.display = 'none';
+                contD.style.display = 'none';
+                contE.classList.add('visi');
+                
+                // Démarrer le minuteur
+                document.getElementById("crono").style.cursor = "no-drop";
+                document.getElementById("crono").style.color = "red";
+                document.getElementById("crono").style.opacity = "0.5";
+        
+                const activ = Math.floor(100000 + Math.random() * 900000);
+                localStorage.setItem('activationCode', activ);
+                const email = document.getElementById("put-email").value;
+                const name = userData.name || "Utilisateur"; // Récupérer le nom depuis userData
+                localStorage.setItem('name', name);
+                localStorage.setItem('email', email);
+
+                try {
+                    const response = await fetch('http://127.0.0.1:3000/email-send2', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ uid: user.uid, activ, email, name }),
+                    });
+        
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de l\'envoi du code');
+                    }
+        
+                    const data = await response.json();
+                    console.log(data);
+                    startTimer();
+        
+                } catch (error) {
+                    console.error("Erreur lors de l'envoi de l'email :", error.message);
+                } finally {
+                    document.getElementById("overlay").style.display = "none";
+                }
+        
+            }
+
+        } else if (userData && userData.statue === 'confirm' && userData.boutique === '0') {
+            document.getElementById('cont-c').style.display = "none";
+            document.getElementById('cont-f').style.display = "flex";
+            document.getElementById('singup').style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+
+        } else if (userData && userData.statue === 'confirm' && userData.boutique !== '0') {
+            // Rediriger vers la page penal.html si le statut est "confirm" et le nombre de boutiques n'est pas 0
+            window.location.href = '/V 1.0/main/penal.html';
+
+        } else {
+            showError('erreur', "Erreur de statut utilisateur.");
+            document.getElementById("overlay").style.display = "none";
+        }
+
+    } catch (error) {
+        console.error("Erreur lors de la connexion :", error);
+        if (error.code === 'auth/too-many-requests') {
+            showError('erreur', "Trop de tentatives infructueuses. Veuillez réessayer plus tard.");
+        } else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+            showError('erreur', "Email ou mot de passe incorrect.");
+        } else {
+            showError('erreur', "Erreur inconnue. Veuillez réessayer.");
+        }
+       
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("lunch").addEventListener("click", async function(event) {
+        event.preventDefault();
+        
+        try {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const boutiqueName = document.getElementById("nom-boutique").value;
+            localStorage.setItem('boutiqueName', boutiqueName);
+            const etat = 'hor service';
+            
+            if (!boutiqueName) {
+                showError('erreur', "Veuillez entrer un nom de boutique.");
                 return;
             }
 
-            window.location.href = "/V 1.0/main/penal.html";
-        })
-        .catch((error) => {
-            hideErrors();
-            showError('erreur', "Email ou mot de passe incorrect.");
-        });
+            if (!etat) {
+                showError('erreur', "errur");
+                return;
+            }
+
+            if (!user || !user.uid) {
+                showError('erreur', "Utilisateur non authentifié.");
+                return;
+            }
+
+            document.getElementById("overlay").style.display = "block";
+
+            const response = await fetch(`http://127.0.0.1:3000/boutique/${user.uid}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: boutiqueName , etat: etat})
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Erreur lors de la création de la boutique');
+            }
+
+            const data = await response.json();
+            console.log(data);
+            console.log("Nom de la boutique dans le localStorage:", localStorage.getItem('boutiqueName'));
+            window.open('/V 1.0/main/penal.html', '_self');
+         
+
+        } catch (error) {
+            console.error("Erreur:", error.message);
+            showError('erreur3', error.message);
+        } finally {
+            document.getElementById("overlay").style.display = "none";
+        }
+    });
 });
 
-document.getElementById("inc").addEventListener("click", function(event){
+// Fonction d'affichage des erreurs
+function showError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
+}
+
+// Fonction pour récupérer les données utilisateur depuis le serveur
+async function getUserData(uid) {
+    console.log("Récupération des données utilisateur pour UID :", uid);
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/user/${uid}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des données de l\'utilisateur');
+        }
+
+        const userData = await response.json();
+        console.log('Données utilisateur récupérées:', userData);
+        return userData;
+
+    } catch (error) {
+        console.error("Erreur lors de la récupération des données utilisateur :", error);
+        showError('erreur', "Erreur lors de la récupération des données utilisateur.");
+        document.getElementById("overlay").style.display = "none";
+        return null;
+    }
+}
+
+
+async function handleInput() {
+    const codeInput = document.getElementById("code-activation");
+    const code = codeInput.value;
+    const user = JSON.parse(localStorage.getItem('user')); // Désérialiser l'objet user
+    const userId = user?.uid; // Récupérer l'UID de l'utilisateur depuis les données stockées
+    const activ = localStorage.getItem('activationCode'); // Récupérer le code d'activation stocké
+    
+
+    if (code.length > 6) {
+        codeInput.value = code.slice(0, 6); // Réduit la longueur à 6 chiffres
+    }
+
+    if (code.length === 6) {
+        document.getElementById("overlay").style.display = "block";
+        
+        if (code === activ) {
+            hideErrors();
+
+            try {
+                const response = await fetch(`http://localhost:3000/user/${userId}/statue`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ statue: "confirm" })
+                });
+
+                if (response.ok) {
+                    // Utilisation de `getElementById` pour `cont-e` et `cont-f`
+                    document.getElementById('cont-e').style.display = "none";
+                    document.getElementById('cont-f').style.display = "flex";
+                    document.getElementById('singup').style.display = "none";
+                } else if (response.status === 404) {
+                    showError('erreur2', "Utilisateur non trouvé.");
+                } else {
+                    showError('erreur2', "Erreur lors de la mise à jour du statut.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la mise à jour du statut :", error);
+                showError('erreur2', "Erreur de connexion au serveur.");
+            } finally {
+                document.getElementById("overlay").style.display = "none";
+            }
+
+        } else {
+            showError('erreur2', "Code de verification incorrect");
+            document.getElementById("overlay").style.display = "none";
+        }
+    }
+}
+
+
+
+
+
+// Fonction pour démarrer le minuteur
+function startTimer() {
+    let timeLeft = 60;
+    const cronoElement = document.getElementById("crono");
+    if (!cronoElement) return;
+
+    cronoElement.textContent = `${timeLeft} secondes restantes`;
+
+    const timerId = setInterval(() => {
+        timeLeft--;
+        cronoElement.textContent = `${timeLeft} secondes restantes`;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerId);
+            cronoElement.textContent = "Renvoyez le code";
+            cronoElement.style.cursor = "pointer";
+            cronoElement.style.color = "#0505fb";
+            cronoElement.style.opacity = "1";
+        }
+    }, 1000);
+}
+
+
+document.getElementById("inc").addEventListener("click", async function(event) {
     event.preventDefault();
+    hideErrors();
+
     const name = document.getElementById("cree-nom").value;
     const email = document.getElementById("cree-email").value;
     const password = document.getElementById("cree-password").value;
-    const subject = 'Activation de votre compte';
-    const message = 'Bonjour'+ name +',\n\n'+ 'Veuillez cliquer'
+    const activ = Math.floor(100000 + Math.random() * 900000);
 
-    auth.createUserWithEmailAndPassword(email, password)
-        .then(async (userCredential)=> {
-            const user = userCredential.user;
-            const userId = user.uid;
+    localStorage.setItem('activationCode', activ);
+    localStorage.setItem('name', name);
+    localStorage.setItem('email', email);
 
-            database.ref('users/' + userId).set ({
-                name: name,
-                email: email,
-                premium: 'non',
-                statue: 'first',
-                id: userId,
-                boutique: '0',
+    document.getElementById("overlay").style.display = "block";
+
+    try {
+        const response = await fetch('http://127.0.0.1:3000/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, password, activ }),
+        });
+
+        if (!response.ok) {
+            // Vérifier si l'erreur est due à un conflit (utilisateur déjà existant)
+            if (response.status === 409) {
+                throw new Error('Ce compte existe déjà.');
+            } else {
+                throw new Error('Erreur lors de l\'inscription');
+            }
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        if (data.uid) {
+            localStorage.setItem('UID', data.uid);
+        } else {
+            console.log('Erreur lors de la création de l\'utilisateur:', data.message);
+        }
+
+        const contC = document.querySelector('.cont-c');
+        const contD = document.querySelector('.cont-d');
+        const contE = document.querySelector('.cont-e');
+        if (contC && contD && contE) {
+            contD.style.display = 'none';
+            contC.classList.add('visi');
+        }
+        
+        const singupElement = document.getElementById("singup");
+        if (singupElement) singupElement.style.display = 'none';
+
+        const putEmail = document.getElementById("put-email");
+        const putPassword = document.getElementById("put-password");
+        if (putEmail && putPassword) {
+            putEmail.value = email;
+            putPassword.value = password;
+        }
+
+    } catch (error) {
+        showError('erreur1', error.message);
+    } finally {
+        document.getElementById("overlay").style.display = "none";
+    }
+});
+
+
+
+document.getElementById("crono").addEventListener("click", async function(event) {
+        startTimer();
+
+        document.getElementById("crono").style.cursor = "no-drop";
+        document.getElementById("crono").style.color = "red";
+        document.getElementById("crono").style.opacity = "0.5";
+
+        const uid = localStorage.getItem('UID');
+        const activ = localStorage.getItem('activationCode');
+        const email = localStorage.getItem('email');
+        const name = localStorage.getItem('name');
+
+        try {
+            const response = await fetch('http://127.0.0.1:3000/email-send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ activ, uid, email, name }),
             });
 
-            try {
-                const response = await fetch('https://boutiquedz.onrender.com/send-email', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, subject, message }),
-                  });                  
-        
-                if (response.ok) {
-                  alert('Email envoyé avec succès');
-                } else {
-                  alert('Erreur lors de l\'envoi de l\'email');
-                }
-                
-              } catch (error) {
-                console.error('Erreur:', error);
-              }
-    
+            if (!response.ok) {
+                throw new Error('Erreur lors de l\'envoi du code');
+            }
 
-            document.getElementById("put-email").value = email;
-            document.getElementById("put-password").value = password;
-            document.getElementById("cont-c").style.display = "none";
+            const data = await response.json();
+            console.log(data);
 
-        })
-       
-        .catch((error) => {
-            showError('erreur', "Erreur lors de l'inscription : " + error.message);
-        });
+        } catch (error) {
+            console.error("Erreur lors de l'envoi de l'email :", error.message);
+        } finally {
+            document.getElementById("overlay").style.display = "none";
+        }
 });
+
+
+
+
+
+
 
 document.getElementById("put-email").addEventListener("click", function(event) {
     document.getElementById("cont-c").classList.add("force")
@@ -270,4 +579,6 @@ function hideErrors() {
     });
 }
 
-      
+
+
+

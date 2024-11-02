@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/V 1.0/css/login1.css">
 </head>
 <body>
+    <div id="overlay"></div>
 
     <div class="cont" id="cont">
             <div class="cont-a">
@@ -27,14 +28,14 @@
             </div>
         </div>
 
-        <div id="cont-c" class="cont-c" style="display: none;">
+        <div id="cont-c" class="cont-c">
             <h3>Information de Connxion</h3>
             <input id="put-email" type="email" placeholder="Votre adresse email">
             <input id="put-password" type="password" placeholder="Mot de passe">
             <p id="recup">Recupere votre compte</p>
             <button id="cnx">Connxion</button>
             <p id="copy">&copy; All right reserved 2024</p>
-            <p id="erreur">erreur</p>
+            <p id="erreur"></p>
         </div>
 
         <div class="cont-d" style="display: none;"> 
@@ -45,11 +46,24 @@
             <input id="cree-rpassword" type="password" placeholder="Entre a nouvaux votre mot de passe" required>
             <button id="inc">Inscription</button>
             <p id="copy">&copy; All right reserved 2024</p>
+            <p id="erreur1"></p>
         </div>
 
-        <div class="cont-e"> 
+        <div id="cont-e" class="cont-e" style="display: none;"> 
             <h3>Activation du compte</h3>
-            <p>Un email de verification a ete envoyer a vore email <br> veiller activer votre compte pour proceder</p>
+            <p>Un email de verification a ete envoyer a vore email <br> veiller entrez le code d'activation pour activer votre compte pour proceder</p>
+            <input id="code-activation" type="number" placeholder="Code d'activation">
+            <p id="crono">Renvoyer le code</p>
+            <p id="erreur2"></p>
+            <p id="copy">&copy; All right reserved 2024</p>
+        </div>
+
+        <div id="cont-f" class="cont-f" style="display: none;"> 
+            <h3>Cree ta premiere boutique</h3>
+            <p>Pour acceder a nos service <br> veiller cree votre premiere boutique c totalment gratuit</p>
+            <input id="nom-boutique" type="text" placeholder="Nom de boutique">
+            <p id="lunch">Lancez vous</p>
+            <p id="erreur3"></p>
             <p id="copy">&copy; All right reserved 2024</p>
         </div>
 

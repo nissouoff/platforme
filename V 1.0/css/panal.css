@@ -111,13 +111,14 @@ body {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    position: relative;
 
     &
 
     .dashbord {
         background: #fff;
         margin: 0px;
-        height: 70px;
+        height: 45px;
         display: flex;
         flex-direction: row;
         padding: 10px;
@@ -180,7 +181,7 @@ body {
         font-size: 10px;
         text-align: center;
         right: 30px;
-        top: 10px;;
+        top: 10px;
     }
 
     .dashbord-f, .dashbord-ff {
@@ -190,6 +191,92 @@ body {
         flex-direction: column;
         margin-bottom: 30px;
         padding: 5px;
+        
+    }
+
+    .part-botique {
+       
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+
+        & h3 {
+            font-size: 15px;
+            text-align: center;
+        }
+        
+        p{
+            font-size: 14px;
+        }
+
+        .nom-boutique {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.241);
+            padding: 5px;
+            margin-bottom: 30px;
+            border-radius: 11px;
+            width: 500px;
+        }
+
+.form-control {
+    position: relative;
+    margin: 10px 0 30px;
+    width: 390px;
+   
+   
+  }
+  
+  .form-control input {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px #000000 solid;
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    font-size: 15px;
+    color: #000000;
+  }
+  
+  .form-control input:focus,
+  .form-control input:valid {
+    outline: 0;
+    border-bottom-color: rgb(70, 76, 162);
+  }
+  .form-control label {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    pointer-events: none;
+  }
+  
+  .form-control label span {
+    display: inline-block;
+    font-size: 15px;
+    min-width: 5px;
+    color: #000000;
+    transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .form-control input:focus+label span,
+  .form-control input:valid+label span {
+    color:  rgb(70, 76, 162);
+    transform: translateY(-30px);
+  }
+
+        .part-boutique1, .part-boutique2 {
+            margin-bottom: 10px;
+            margin-bottom: 30px;
+            background: #ffffff;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .part-boutique2 {
+            padding: 10px;
+            padding-left: 20px;
+        }
     }
 
     #txt-parametre-genral {
@@ -214,7 +301,7 @@ body {
         margin-left: 10px;
         margin-right: 10px;
         align-items: center;
-        width: 300px;
+        width: 400px;
         padding: 10px;
         margin-bottom: 11px;
         background: #fff;
@@ -236,10 +323,11 @@ body {
         left: 450px;
     }
 
-    #nn {
-        margin-right: 20px;
-        
+    #n-boutique, #nn, #e-boutique {
+        margin-right: 20px;  
     }
+
+
 
     #cnf {
         width: 100px;
@@ -248,7 +336,7 @@ body {
         border: none;
         background: #dadaff;
         margin-left: auto;
-        display: none;
+        
         opacity: 0.5;
         border: solid 1px;
         cursor: no-drop;
@@ -362,3 +450,47 @@ body {
     background: transparent;
     opacity: 0.5 !important;
 }
+
+.bi {
+    background-color: #fff;
+    padding: 6px;
+    padding-top: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+
+    & #a, #b {
+        color: #561693;
+        text-decoration: none;
+        padding-left: 6px;
+        padding-right: 6px;
+        padding: 7px;
+        background-color: #dadaff;
+        border-radius: 0 0 10px 10px;
+    }
+
+    #b {
+        color: #000;
+    }
+
+    #a:hover, #b:hover {
+        color: #561693;
+        
+    }
+
+    
+    
+}
+
+#confirm {
+    margin-top: 20px;
+    height: 30px;
+    width: 200px;
+    border-radius: 7px;
+    border: none;
+    background: #dadaff;
+}
+
+
