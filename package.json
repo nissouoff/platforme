@@ -1,7 +1,7 @@
 {
   "name": "platform",
   "version": "1.0.0",
-  "license": "MIT",  // Ajoutez la ligne de licence ici
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
