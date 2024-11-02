@@ -317,7 +317,7 @@ function showError(elementId, message) {
 async function getUserData(uid) {
     console.log("Récupération des données utilisateur pour UID :", uid);
     try {
-        const response = await fetch(`http://127.0.0.1:3000/user/${uid}`, {
+        const response = await fetch(`https://platforme.onrender.com/user/${uid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
