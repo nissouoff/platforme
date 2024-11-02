@@ -316,18 +316,17 @@ function showError(elementId, message) {
 // Fonction pour récupérer les données utilisateur depuis le serveur
 async function getUserData(uid) {
     try {
-        const response = await fetch(`https://platforme.onrender.com/api/user/${uid}`);
-        console.log('Response:', response); // Ajoutez cette ligne pour voir la réponse
-
+        const response = await fetch(`https://platforme.onrender.com/user/${uid}`);
         if (!response.ok) {
-            throw new Error('Erreur lors de la récupération des données utilisateur');
+            throw new Error('Erreur lors de la récupération des données de l\'utilisateur : ' + response.statusText);
         }
-        return await response.json();
+        const userData = await response.json();
+        console.log(userData); // Traiter les données ici
     } catch (error) {
-        console.error('Erreur dans getUserData:', error);
-        throw error; // Relancez l'erreur pour la gérer en dehors de la fonction
+        console.error('Erreur lors de la récupération des données utilisateur :', error);
     }
 }
+
 
 
 
