@@ -3,28 +3,29 @@ const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Utiliser le port défini par Render ou 3000 par défaut
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // Initialiser Firebase Admin SDK avec la clé de service et l'URL de la base de données
-const serviceAccount = require('./ab.json');
+const serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_JSON, 'utf8'));
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://infofoot-32892-default-rtdb.firebaseio.com"
+    databaseURL: process.env.FIREBASE_DATABASE_URL, // Utiliser une variable d'environnement pour l'URL de la base de données
 });
 
 // Configurer Nodemailer
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'nissoulintouchable@gmail.com',
-        pass: 'kvxf ckox cxmv jfag',
+        user: process.env.EMAIL_USER, // Utiliser une variable d'environnement pour l'utilisateur email
+        pass: process.env.EMAIL_PASS,   // Utiliser une variable d'environnement pour le mot de passe email
     },
 });
 
@@ -45,7 +46,7 @@ app.post('/email-send', async (req, res) => {
         }
 
         const mailOptions = {
-            from: 'nissoulintouchable@gmail.com',
+            from: process.env.EMAIL_USER, // Utiliser la variable d'environnement
             to: email,
             subject: 'Activer votre compte',
             text: `Bonjour ${name},\n\nMerci de vous être inscrit sur notre plateforme! Votre code d'activation est : ${activ}\n\nCordialement,\nL'équipe`,
@@ -60,6 +61,7 @@ app.post('/email-send', async (req, res) => {
     }
 });
 
+// Route pour l'envoi d'email (secondaire)
 app.post('/email-send2', async (req, res) => {
     const { uid, activ, email, name } = req.body;
 
@@ -76,7 +78,7 @@ app.post('/email-send2', async (req, res) => {
         }
 
         const mailOptions = {
-            from: 'nissoulintouchable@gmail.com',
+            from: process.env.EMAIL_USER, // Utiliser la variable d'environnement
             to: email,
             subject: 'Activer votre compte',
             text: `Bonjour ${name},\n\nMerci de vous être inscrit sur notre plateforme! Votre code d'activation est : ${activ}\n\nCordialement,\nL'équipe`,
@@ -104,7 +106,6 @@ app.post('/signup', async (req, res) => {
         const userExists = await admin.auth().getUserByEmail(email).catch(error => null);
 
         if (userExists) {
-            // Envoyer une réponse avec un code 409 pour indiquer que l'utilisateur existe déjà
             return res.status(409).json({ message: 'Ce compte existe déjà.' });
         }
 
@@ -126,13 +127,13 @@ app.post('/signup', async (req, res) => {
         console.error('Erreur lors de l\'inscription :', error);
         res.status(500).json({ message: 'Erreur lors de l\'inscription.' });
     }
-});// Route pour récupérer les données d'un utilisateur
+});
 
+// Route pour récupérer les données d'un utilisateur
 app.get('/user/:uid', async (req, res) => {
     try {
         const { uid } = req.params;
-        
-        // Récupération des données spécifiques de l'utilisateur depuis Firebase
+
         const userSnapshot = await admin.database().ref(`users/${uid}`).once('value');
         const userData = userSnapshot.val();
 
@@ -148,20 +149,17 @@ app.get('/user/:uid', async (req, res) => {
         console.log('boutique', boutique);
         console.log('solde', solde);
 
-
     } catch (error) {
         console.error('Erreur lors de la récupération des données :', error);
         res.status(500).json({ message: 'Erreur lors de la récupération des données.' });
     }
 });
 
-
 // Route pour récupérer les informations d'une boutique spécifique
 app.get('/boutique/:uid/:nomb', async (req, res) => {
     try {
         const { uid, nomb } = req.params;
-        
-        // Récupération des données de la boutique depuis Firebase
+
         const boutiqueSnapshot = await admin.database().ref(`boutiques/${uid}/${nomb}`).once('value');
         const boutiqueData = boutiqueSnapshot.val();
 
@@ -179,10 +177,6 @@ app.get('/boutique/:uid/:nomb', async (req, res) => {
     }
 });
 
-
-
-
-
 // Route pour changer la valeur de statue d'un utilisateur
 app.patch('/user/:uid/statue', async (req, res) => {
     const { uid } = req.params;
@@ -195,7 +189,7 @@ app.patch('/user/:uid/statue', async (req, res) => {
 
         const userRef = admin.database().ref(`users/${uid}`);
         const userSnapshot = await userRef.once('value');
-        
+
         if (!userSnapshot.exists()) {
             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
         }
@@ -219,33 +213,25 @@ app.post('/boutique/:uid', async (req, res) => {
             return res.status(400).json({ message: 'Données manquantes pour la création de la boutique.' });
         }
 
-        // Référence à la boutique spécifique dans la base de données Firebase
         const boutiqueRef = admin.database().ref(`boutiques/${uid}/${name}`);
 
-        // Vérifier si une boutique avec le même nom existe déjà
         const boutiqueSnapshot = await boutiqueRef.once('value');
         if (boutiqueSnapshot.exists()) {
             return res.status(400).json({ message: 'Une boutique avec ce nom existe déjà.' });
         }
 
-        // Ajouter la nouvelle boutique dans Firebase
         await boutiqueRef.set({
             name,
             etat,
             createdAt: admin.database.ServerValue.TIMESTAMP
         });
 
-        // Référence pour le compteur de boutiques dans le profil de l'utilisateur
         const userBoutiqueCountRef = admin.database().ref(`users/${uid}/boutique`);
-
-        // Récupérer le nombre actuel de boutiques de l'utilisateur, en forçant la conversion en nombre
         const userBoutiqueCountSnapshot = await userBoutiqueCountRef.once('value');
         let currentCount = userBoutiqueCountSnapshot.exists() ? parseInt(userBoutiqueCountSnapshot.val(), 10) : 0;
 
-        // Incrémenter le compteur de boutiques de 1
         await userBoutiqueCountRef.set(currentCount + 1);
 
-        // Répondre avec succès
         res.status(201).json({ message: 'Boutique créée avec succès.' });
 
     } catch (error) {
@@ -254,19 +240,12 @@ app.post('/boutique/:uid', async (req, res) => {
     }
 });
 
-
 // Middleware pour les erreurs 404
 app.use((req, res) => {
     res.status(404).json({ message: "Route non trouvée" });
 });
-    // Démarrer le serveur
-    app.listen(PORT, () => {
-        console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
-    });
 
-
-
-
-
-
-
+// Démarrer le serveur
+app.listen(PORT, () => {
+    console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
+});
