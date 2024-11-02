@@ -13,7 +13,7 @@
     })
 
     // Fermer automatiquement l'inspecteur d'éléments
-} 
+}
 
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -198,7 +198,7 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
                 localStorage.setItem('email', email);
 
                 try {
-                    const response = await fetch('https://boutiquedz.onrender.com/email-send2', {
+                    const response = await fetch('http://127.0.0.1:3000/email-send2', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             document.getElementById("overlay").style.display = "block";
 
-            const response = await fetch(`https://boutiquedz.onrender.com/boutique/${user.uid}`, {
+            const response = await fetch(`http://127.0.0.1:3000/boutique/${user.uid}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -360,7 +360,7 @@ async function handleInput() {
             hideErrors();
 
             try {
-                const response = await fetch(`https://boutiquedz.onrender.com//user/${userId}/statue`, {
+                const response = await fetch(`http://localhost:3000/user/${userId}/statue`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -435,7 +435,7 @@ document.getElementById("inc").addEventListener("click", async function(event) {
     document.getElementById("overlay").style.display = "block";
 
     try {
-        const response = await fetch('https://boutiquedz.onrender.com//signup', {
+        const response = await fetch('http://127.0.0.1:3000/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -501,7 +501,7 @@ document.getElementById("crono").addEventListener("click", async function(event)
         const name = localStorage.getItem('name');
 
         try {
-            const response = await fetch('https://boutiquedz.onrender.com/0/email-send', {
+            const response = await fetch('http://127.0.0.1:3000/email-send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
