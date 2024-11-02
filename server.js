@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Initialiser Firebase Admin SDK avec la clé de service et l'URL de la base de données
-const serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_JSON, 'utf8'));
+const serviceAccount = require('./ab.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
