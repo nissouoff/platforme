@@ -199,7 +199,7 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
                 localStorage.setItem('email', email);
                 
                 try {
-                    const response = await fetch('https://platforme-1wzq.vercel.app/email-send2', {
+                    const response = await fetch('https://platforme-1wzq.vercel.app/api/email-send2', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -319,7 +319,7 @@ function showError(elementId, message) {
 async function getUserData(uid) {
     console.log("Récupération des données utilisateur pour UID :", uid);
     try {
-        const response = await fetch(`https://platforme-1wzq.vercel.app/${uid}`, {
+        const response = await fetch(`https://platforme-1wzq.vercel.app/api/${uid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
