@@ -9,6 +9,13 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000; // Utiliser la variable d'environnement PORT
 
+app.use(express.static('public'));
+
+// Route pour rediriger vers index.html
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
