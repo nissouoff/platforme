@@ -199,7 +199,7 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
                 localStorage.setItem('email', email);
                 
                 try {
-                    const response = await fetch('https://platforme-1wzq.vercel.app/email-send2', {
+                    const response = await fetch('https://platforme-mumb42uhi-nissouoffs-projects.vercel.app/email-send2', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             document.getElementById("overlay").style.display = "block";
 
-            const response = await fetch(`https://platforme-1wzq.vercel.app/boutique/${user.uid}`, {
+            const response = await fetch(`https://platforme-mumb42uhi-nissouoffs-projects.vercel.app/boutique/${user.uid}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -319,7 +319,7 @@ function showError(elementId, message) {
 async function getUserData(uid) {
     console.log("Récupération des données utilisateur pour UID :", uid);
     try {
-        const response = await fetch(`https://platforme-1wzq.vercel.app/user/${uid}`, {
+        const response = await fetch(`https://platforme-mumb42uhi-nissouoffs-projects.vercel.app/user/${uid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -362,7 +362,7 @@ async function handleInput() {
             hideErrors();
 
             try {
-                const response = await fetch(`https://platforme-1wzq.vercel.app/${userId}/statue`, {
+                const response = await fetch(`https://platforme-mumb42uhi-nissouoffs-projects.vercel.app/${userId}/statue`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -437,7 +437,7 @@ document.getElementById("inc").addEventListener("click", async function(event) {
     document.getElementById("overlay").style.display = "block";
 
     try {
-        const response = await fetch(' https://platforme-1wzq.vercel.app/signup', {
+        const response = await fetch('https://platforme-mumb42uhi-nissouoffs-projects.vercel.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -503,7 +503,7 @@ document.getElementById("crono").addEventListener("click", async function(event)
         const name = localStorage.getItem('name');
 
         try {
-            const response = await fetch('https://platforme-1wzq.vercel.app/email-send', {
+            const response = await fetch('https://platforme-mumb42uhi-nissouoffs-projects.vercel.app/email-send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
