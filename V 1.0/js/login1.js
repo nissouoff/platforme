@@ -158,15 +158,16 @@ function checkNomBoutique() {
 
 document.getElementById("cnx").addEventListener("click", async function(event) {
     event.preventDefault();
-    hideErrors();
+    hideErrors(); // Fonction pour masquer les erreurs
 
     const email = document.getElementById("put-email").value;
     const password = document.getElementById("put-password").value;
    
-    document.getElementById("overlay").style.display = "block";
+    document.getElementById("overlay").style.display = "block"; // Afficher un overlay pendant le chargement
     console.log("Tentative de connexion avec l'email:", email);
 
     try {
+        // Connexion avec Firebase
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
         localStorage.setItem('user', JSON.stringify(user));        
@@ -174,6 +175,7 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
 
         // Récupération des données utilisateur
         const userData = await getUserData(user.uid);
+        console.log('Données utilisateur récupérées:', userData); // Journaliser les données utilisateur
 
         if (userData && userData.statue === 'no confirm') {
             document.getElementById("overlay").style.display = "none";
@@ -192,32 +194,31 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
         
                 const activ = Math.floor(100000 + Math.random() * 900000);
                 localStorage.setItem('activationCode', activ);
-                const email = document.getElementById("put-email").value;
                 const name = userData.name || "Utilisateur"; // Récupérer le nom depuis userData
                 localStorage.setItem('name', name);
                 localStorage.setItem('email', email);
                 
                 try {
-                    const response = await fetch(' https://platforme.onrender.com/email-send2', {
+                    const response = await fetch('https://platforme.vercel.app/email-send2', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ uid: user.uid, activ, email, name }),
                     });
-        
+
                     if (!response.ok) {
                         throw new Error('Erreur lors de l\'envoi du code');
                     }
-        
+
                     const data = await response.json();
                     console.log(data);
-                    startTimer();
-        
+                    startTimer(); // Démarrer le minuteur
+                    
                 } catch (error) {
                     console.error("Erreur lors de l'envoi de l'email :", error.message);
                 } finally {
-                    document.getElementById("overlay").style.display = "none";
+                    document.getElementById("overlay").style.display = "none"; // Masquer l'overlay après traitement
                 }
         
             }
@@ -249,6 +250,7 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
        
     }
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("lunch").addEventListener("click", async function(event) {
@@ -317,7 +319,7 @@ function showError(elementId, message) {
 async function getUserData(uid) {
     console.log("Récupération des données utilisateur pour UID :", uid);
     try {
-        const response = await fetch(`http://127.0.0.1:3000/user/${uid}`, {
+        const response = await fetch(`https://platforme.vercel.app/user/${uid}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -435,7 +437,7 @@ document.getElementById("inc").addEventListener("click", async function(event) {
     document.getElementById("overlay").style.display = "block";
 
     try {
-        const response = await fetch(' https://platforme.vercel.app//signup', {
+        const response = await fetch(' https://platforme.vercel.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -501,7 +503,7 @@ document.getElementById("crono").addEventListener("click", async function(event)
         const name = localStorage.getItem('name');
 
         try {
-            const response = await fetch(' https://platforme.vercel.app//email-send', {
+            const response = await fetch(' https://platforme.vercel.app/email-send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
