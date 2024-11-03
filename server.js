@@ -10,7 +10,12 @@ const app = express();
 const PORT = process.env.PORT || 3000; // Utiliser la variable d'environnement PORT
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: 'https://platforme-1wzq.vercel.app', // Remplacez par votre domaine
+    methods: ['GET', 'POST', 'OPTIONS'], // Méthodes autorisées
+    allowedHeaders: ['Content-Type', 'Authorization'], // En-têtes autorisés
+}));
+
 app.use(bodyParser.json());
 
 // Initialiser Firebase Admin SDK
@@ -100,6 +105,8 @@ app.get('/user/:uid', async (req, res) => {
 });
 
 // Démarrer le serveur
+app.options('*', cors()); // Permet toutes les options CORS
+
 app.listen(PORT, () => {
     console.log(`Serveur en écoute sur le port ${PORT}`);
 });
