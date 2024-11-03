@@ -162,7 +162,7 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
 
     const email = document.getElementById("put-email").value;
     const password = document.getElementById("put-password").value;
-   
+
     document.getElementById("overlay").style.display = "block"; // Afficher un overlay pendant le chargement
     console.log("Tentative de connexion avec l'email:", email);
 
@@ -177,65 +177,64 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
         const userData = await getUserData(user.uid);
         console.log('Données utilisateur récupérées:', userData); // Journaliser les données utilisateur
 
-        if (userData && userData.statue === 'no confirm') {
-            document.getElementById("overlay").style.display = "none";
-            const contC = document.querySelector('.cont-c');
-            const contD = document.querySelector('.cont-d');
-            const contE = document.querySelector('.cont-e');
-            if (contC && contD && contE) {
-                contC.style.display = 'none';
-                contD.style.display = 'none';
-                contE.classList.add('visi');
-                
-                // Démarrer le minuteur
-                document.getElementById("crono").style.cursor = "no-drop";
-                document.getElementById("crono").style.color = "red";
-                document.getElementById("crono").style.opacity = "0.5";
-        
-                const activ = Math.floor(100000 + Math.random() * 900000);
-                localStorage.setItem('activationCode', activ);
-                const name = userData.name || "Utilisateur"; // Récupérer le nom depuis userData
-                localStorage.setItem('name', name);
-                localStorage.setItem('email', email);
-                
-                try {
-                    const response = await fetch('https://platforme-1wzq.vercel.app/api/email-send2', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ uid: user.uid, activ, email, name }),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Erreur lors de l\'envoi du code');
-                    }
-
-                    const data = await response.json();
-                    console.log(data);
-                    startTimer(); // Démarrer le minuteur
+        if (userData) {
+            if (userData.statue === 'no confirm') {
+                document.getElementById("overlay").style.display = "none";
+                const contC = document.querySelector('.cont-c');
+                const contD = document.querySelector('.cont-d');
+                const contE = document.querySelector('.cont-e');
+                if (contC && contD && contE) {
+                    contC.style.display = 'none';
+                    contD.style.display = 'none';
+                    contE.classList.add('visi');
                     
-                } catch (error) {
-                    console.error("Erreur lors de l'envoi de l'email :", error.message);
-                } finally {
-                    document.getElementById("overlay").style.display = "none"; // Masquer l'overlay après traitement
+                    // Démarrer le minuteur
+                    document.getElementById("crono").style.cursor = "no-drop";
+                    document.getElementById("crono").style.color = "red";
+                    document.getElementById("crono").style.opacity = "0.5";
+
+                    const activ = Math.floor(100000 + Math.random() * 900000);
+                    localStorage.setItem('activationCode', activ);
+                    const name = userData.name || "Utilisateur"; // Récupérer le nom depuis userData
+                    localStorage.setItem('name', name);
+                    localStorage.setItem('email', email);
+                    
+                    try {
+                        const response = await fetch('https://platforme-1wzq-kwa0d80jb-nissouoffs-projects.vercel.app/email-send2', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ uid: user.uid, activ, email, name }),
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Erreur lors de l\'envoi du code');
+                        }
+
+                        const data = await response.json();
+                        console.log(data);
+                        startTimer(); // Démarrer le minuteur
+                        
+                    } catch (error) {
+                        console.error("Erreur lors de l'envoi de l'email :", error.message);
+                    } finally {
+                        document.getElementById("overlay").style.display = "none"; // Masquer l'overlay après traitement
+                    }
                 }
-        
+            } else if (userData.statue === 'confirm' && userData.boutique === '0') {
+                document.getElementById('cont-c').style.display = "none";
+                document.getElementById('cont-f').style.display = "flex";
+                document.getElementById('singup').style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+
+            } else if (userData.statue === 'confirm' && userData.boutique !== '0') {
+                // Rediriger vers la page penal.html si le statut est "confirm" et le nombre de boutiques n'est pas 0
+                window.location.href = '/V 1.0/main/penal.html';
+            } else {
+                showError('erreur', "Erreur de statut utilisateur.");
+                document.getElementById("overlay").style.display = "none";
             }
-
-        } else if (userData && userData.statue === 'confirm' && userData.boutique === '0') {
-            document.getElementById('cont-c').style.display = "none";
-            document.getElementById('cont-f').style.display = "flex";
-            document.getElementById('singup').style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-
-        } else if (userData && userData.statue === 'confirm' && userData.boutique !== '0') {
-            // Rediriger vers la page penal.html si le statut est "confirm" et le nombre de boutiques n'est pas 0
-            window.location.href = '/V 1.0/main/penal.html';
-
-        } else {
-            showError('erreur', "Erreur de statut utilisateur.");
-            document.getElementById("overlay").style.display = "none";
         }
 
     } catch (error) {
@@ -247,9 +246,35 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
         } else {
             showError('erreur', "Erreur inconnue. Veuillez réessayer.");
         }
-       
     }
 });
+
+async function getUserData(uid) {
+    console.log("Récupération des données utilisateur pour UID :", uid);
+    try {
+        const response = await fetch(`https://platforme-1wzq-kwa0d80jb-nissouoffs-projects.vercel.app/user/${uid}`, { // Modifié ici pour utiliser la bonne route
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des données de l\'utilisateur');
+        }
+
+        const userData = await response.json();
+        console.log('Données utilisateur récupérées:', userData);
+        return userData;
+
+    } catch (error) {
+        console.error("Erreur lors de la récupération des données utilisateur :", error);
+        showError('erreur', "Erreur lors de la récupération des données utilisateur.");
+        document.getElementById("overlay").style.display = "none";
+        return null;
+    }
+}
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -279,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             document.getElementById("overlay").style.display = "block";
 
-            const response = await fetch(`https://platforme-1wzq.vercel.app/boutique/${user.uid}`, {
+            const response = await fetch(`https://platforme-1wzq-kwa0d80jb-nissouoffs-projects.vercel.app/boutique/${user.uid}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -316,31 +341,7 @@ function showError(elementId, message) {
 }
 
 // Fonction pour récupérer les données utilisateur depuis le serveur
-async function getUserData(uid) {
-    console.log("Récupération des données utilisateur pour UID :", uid);
-    try {
-        const response = await fetch(`https://platforme-1wzq.vercel.app/api/${uid}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
 
-        if (!response.ok) {
-            throw new Error('Erreur lors de la récupération des données de l\'utilisateur');
-        }
-
-        const userData = await response.json();
-        console.log('Données utilisateur récupérées:', userData);
-        return userData;
-
-    } catch (error) {
-        console.error("Erreur lors de la récupération des données utilisateur :", error);
-        showError('erreur', "Erreur lors de la récupération des données utilisateur.");
-        document.getElementById("overlay").style.display = "none";
-        return null;
-    }
-}
 
 
 async function handleInput() {
