@@ -123,7 +123,7 @@ app.post('/signup', async (req, res) => {
     }
 });// Route pour récupérer les données d'un utilisateur
 
-app.get('/user/:uid', async (req, res) => {
+app.get('/api/user/:uid', async (req, res) => {
     try {
         const { uid } = req.params;
         
