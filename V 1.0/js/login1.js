@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             document.getElementById("overlay").style.display = "block";
 
-            const response = await fetch(`http://127.0.0.1:3000/boutique/${user.uid}`, {
+            const response = await fetch(`https://platforme.vercel.app/boutique/${user.uid}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -360,7 +360,7 @@ async function handleInput() {
             hideErrors();
 
             try {
-                const response = await fetch(`http://localhost:3000/user/${userId}/statue`, {
+                const response = await fetch(`https://platforme.vercel.app/${userId}/statue`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
@@ -435,7 +435,7 @@ document.getElementById("inc").addEventListener("click", async function(event) {
     document.getElementById("overlay").style.display = "block";
 
     try {
-        const response = await fetch(' https://platforme.onrender.com/signup', {
+        const response = await fetch(' https://platforme.vercel.app//signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -501,7 +501,7 @@ document.getElementById("crono").addEventListener("click", async function(event)
         const name = localStorage.getItem('name');
 
         try {
-            const response = await fetch(' https://platforme.onrender.com/email-send', {
+            const response = await fetch(' https://platforme.vercel.app//email-send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
