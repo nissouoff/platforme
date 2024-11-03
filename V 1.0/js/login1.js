@@ -200,7 +200,7 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
                     localStorage.setItem('email', email);
                     
                     try {
-                        const response = await fetch('https://platforme-1wzq-kwa0d80jb-nissouoffs-projects.vercel.app/email-send2', {
+                        const response = await fetch('https://platforme-1wzq.vercel.app/email-send2', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -252,7 +252,7 @@ document.getElementById("cnx").addEventListener("click", async function(event) {
 async function getUserData(uid) {
     console.log("Récupération des données utilisateur pour UID :", uid);
     try {
-        const response = await fetch(`https://platforme-1wzq-kwa0d80jb-nissouoffs-projects.vercel.app/user/${uid}`, { // Modifié ici pour utiliser la bonne route
+        const response = await fetch(`https://platforme-1wzq.vercel.app/user/${uid}`, { // Modifié ici pour utiliser la bonne route
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -363,7 +363,7 @@ async function handleInput() {
             hideErrors();
 
             try {
-                const response = await fetch(`https://platforme-1wzq-kwa0d80jb-nissouoffs-projects.vercel.app//${userId}/statue`, {
+                const response = await fetch(`https://platforme-1wzq.vercel.app/${userId}/statue`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
